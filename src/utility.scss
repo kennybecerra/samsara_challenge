@@ -1,0 +1,108 @@
+/***************************************
+**********   Variables 	************
+****************************************/
+
+$fontColor1: #ffffff;
+$fontColor2: #0de7ef;
+$fontColor3: rgba(255, 255, 255, 0.15);
+$fontColor4: #727272;
+$fontColor5: #00263e;
+$backDropColor: rgba(13, 231, 239, 0.6);
+
+/***************************************
+**********   Break Points 	************
+****************************************/
+// RESPONSIVE DESKTOP FIRST DESIGN
+/*
+-- 600px        : phone
+600px - 900px   : tab
+900x -1250px    : tab-port
+1250px - 1600px : NORMAL DEFAULT CSS
+1600px+         : big-desktop
+*/
+@mixin ResponsiveMobileFirst($breakpoint) {
+  @if $breakpoint == tab {
+    @media (min-width: 600px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-port {
+    @media (min-width: 900px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == desktop {
+    @media (min-width: 1250px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == big-desktop {
+    @media (min-width: 1600px) {
+      @content;
+    }
+  }
+}
+
+@mixin ResponsiveDesktopFirst($breakpoint) {
+  @if $breakpoint == phone {
+    @media (max-width: 600px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-port {
+    @media (max-width: 900px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-land {
+    @media (max-width: 1250px) {
+      @content;
+    }
+  }
+
+  //Desktop is the CSS already created by default
+
+  @if $breakpoint == big-desktop {
+    @media (min-width: 160rem) {
+      @content;
+    }
+  }
+}
+
+/***************************************
+*************   FONTS 	****************
+****************************************/
+@function appendBackupFonts($baseFont) {
+  @return $baseFont, sans-serif;
+}
+
+@mixin font($font, $size, $lh, $weight: 300, $bp: false) {
+  @if $bp {
+    @include ResponsiveMobileFirst($bp) {
+      font-family: appendBackupFonts($font);
+      font-size: $size;
+      line-height: $lh;
+      font-weight: $weight;
+    }
+  } @else {
+    font-family: appendBackupFonts($font);
+    font-size: $size;
+    line-height: $lh;
+    font-weight: $weight;
+  }
+}
+
+/***************************************
+*************   UTILITY 	**************
+****************************************/
+
+@mixin aspect-ratio($width, $percentage) {
+  height: 0;
+  width: $width;
+  padding-top: $percentage;
+}
